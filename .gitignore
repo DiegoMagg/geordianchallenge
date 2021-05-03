@@ -135,3 +135,5 @@ README.txt
 .vscode
 example.xml
 htmlcov
+seatmap1_parsed.json
+seatmap2_parsed.json
