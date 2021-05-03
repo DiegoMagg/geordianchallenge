@@ -57,8 +57,10 @@ def get_cleaned_xml(filepath):
     xml = ElementTree.tostring(ElementTree.parse(filepath).getroot(), encoding='UTF-8').decode('UTF-8')
     return ElementTree.fromstring(sub(r'<(ns\d*?:)', '<', sub(r'<(\/ns\d*?:)', '</', xml)))
 
+
 def normalize_string(value):
     return sub(r'(?<!^)(?=[A-Z])', '_', value).lower()
+
 
 def normalize_date(date):
     date = datetime(
@@ -66,12 +68,19 @@ def normalize_date(date):
     )
     return date.isoformat()
 
+
 class JsonTools:
 
     def __init__(self, json):
         self.json = json
 
-    def normalize_json(self, json):
+    def export_json(self, filename):
+        filename, extension = filename.split('.')
+        with open(f'{filename}_parsed.json', 'w') as json_file:
+            json_file.write(str(dumps(self.json, indent=2)))
+
+    @staticmethod
+    def normalize_json(json):
         new_json = {}
         for k, v in json.items():
             v = to_boolean(
@@ -79,7 +88,3 @@ class JsonTools:
             ) if isinstance(v, str) else v
             new_json[normalize_string(k)] = v
         return new_json
-
-    def export_json(self, filename):
-        with open(filename.replace('.xml', '.json'), 'w') as json_file:
-            json_file.write(str(dumps(self.json, indent=2)))

@@ -8,6 +8,6 @@ class ParserBase(JsonTools):
     def __init__(self, main_xml_element):
         self.main_xml_element = main_xml_element
 
-    def parse(self):
-        self.extract_flight_data()
-        self.extract_seat_map()
+    def parse(self):  # pragma: no cover
+        self.parse_flight_data()
+        self.parse_seat_map()

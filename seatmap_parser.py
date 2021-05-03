@@ -3,7 +3,8 @@ from sys import argv
 from utils import get_cleaned_xml
 from parsers import SeatMapOneToJson, SeatMapTwoToJson
 
-def start_parser(filename):
+
+def start_parser(filename): # pragma: no cover
     seatmap_one_main_element = './Body/OTA_AirSeatMapRS/SeatMapResponses/SeatMapResponse'
     xml = get_cleaned_xml(f'{str(pathlib.Path().absolute())}/{filename}')
     if xml.find(seatmap_one_main_element):

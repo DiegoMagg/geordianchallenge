@@ -7,7 +7,7 @@ class SeatInfoParser(JsonTools):
 
     def __init__(self, seat_info):
         self.seat_info = seat_info
-        self.seat_list= []
+        self.seat_list = []
 
     def parse(self):
         for si in self.seat_info:
@@ -41,13 +41,9 @@ class SeatInfoParser(JsonTools):
         return seat
 
 
-    def parse_additional_info(self, si):
-        self.seat['additional_info'] = self.normalize_json(si.attrib)
-
-
 class SeatMapOneToJson(ParserBase):
 
-    def extract_flight_data(self):
+    def parse_flight_data(self):
         element = self.main_xml_element.find('./FlightSegmentInfo')
         self.json['flight'] = {
             'number': element.attrib['FlightNumber'],
@@ -57,7 +53,7 @@ class SeatMapOneToJson(ParserBase):
             'air_equip_type': element.find('./Equipment').attrib['AirEquipType'],
         }
 
-    def extract_seat_map(self):
+    def parse_seat_map(self):
         for cabin_class in list(self.main_xml_element.find('./SeatMapDetails')):
             data = {'cabin_layout': cabin_class.attrib['Layout']}
             for row_info in cabin_class.findall('./RowInfo'):
