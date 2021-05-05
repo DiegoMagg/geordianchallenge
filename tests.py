@@ -80,13 +80,16 @@ class SeatMapOneTestCase(unittest.TestCase):
 
     def test_service_data_must_return_with_none_values_if_no_service_data_in_seat_data(self):
         self.assertEqual(
-            {'fee': {'amount': None, 'currency_code': None}, 'taxes': {'amount': None, 'currency_code': None}},
+            {
+                'fee': {'amount': None, 'currency_code': None},
+                'taxes': {'amount': None, 'currency_code': None},
+            },
             self.sip.parse_service(self.seat_info, {}),
         )
 
     def test_service_data_must_return_when_service_data_on_seat(self):
         seat_info = '''
-            <SeatInfo BlockedInd="false" BulkheadInd="false" ColumnNumber="3" ExitRowInd="false" GalleyInd="false" GridNumber="3" PlaneSection="Left">
+            <SeatInfo BlockedInd="false" BulkheadInd="false" ColumnNumber="3" ExitRowInd="false" GalleyInd="false" GridNumber="3" PlaneSection="Left">  # noqa
                 <Summary AvailableInd="true" InoperativeInd="false" OccupiedInd="false" SeatNumber="12C"/>
                 <Features extension="Preferred">Other_</Features>
                 <Features>Aisle</Features>
@@ -190,12 +193,6 @@ class SeatMapTwoTestCase(unittest.TestCase):
         )
 
     def test_payment_data_return_with_no_values_if_no_payment_element_in_seat_info(self):
-        seat_info = Eltree.fromstring('''
-            <Seat>
-                <Column>A</Column>
-            </Seat>
-        '''
-        )
         self.assertEqual(
             {
                 'fee': {'amount': 2210, 'currency_code': 'gbp'},
@@ -227,6 +224,7 @@ class SeatMapTwoTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.smt = None
+
 
 if __name__ == '__main__':
     unittest.main()

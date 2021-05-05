@@ -13,6 +13,7 @@ FEATURES = {
     'SD21': 'rear facing seat',
 }
 
+
 class SeatInfoParser(JsonTools):
 
     def __init__(self, row, offers):
@@ -52,9 +53,7 @@ class SeatInfoParser(JsonTools):
         }
 
     def parse_features(self, si, seat):
-        seat['features'] = []
-        for key in [i.text for i in list(si) if FEATURES.get(i.text)]:
-            seat['features'].append(FEATURES[key])
+        seat['features'] = [FEATURES.get(i.text) for i in list(si) if FEATURES.get(i.text)]
         if 'window' not in seat['features'] and 'aisle' not in seat['features']:
             seat['features'].append('center')
         return seat
@@ -68,6 +67,7 @@ class SeatInfoParser(JsonTools):
                 'taxes': {'amount': None, 'currency_code': None},
             })
         return seat
+
 
 class SeatMapTwoToJson(ParserBase):
 
