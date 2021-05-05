@@ -1,5 +1,4 @@
 import unittest
-from conf import settings
 from xml.etree import ElementTree as Eltree
 import pathlib
 from utils import (
@@ -28,7 +27,7 @@ class ToolsTestCase(unittest.TestCase):
         self.assertEqual('test', to_boolean('test'))
 
     def test_string_must_be_converted_to_integer_or_return_original_value(self):
-        self.assertEqual(1, to_integer(1))
+        self.assertEqual(1, to_integer('1'))
         self.assertEqual('test', to_integer('test'))
 
     def test_integer_must_return_as_string(self):
